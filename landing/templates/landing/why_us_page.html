@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'landing/assets/css/landing.css' %}" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;1,400;1,900&display=swap" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% endblock %}
+{% block content %}
+
+<div class="why-us-head">
+    <h5>Why Us?</h5>
+    <h1>Easy-to-use <i class="fa fa-caret-right"></i>  Free to get started <i class="fa fa-caret-right"></i>Cancel anytime</h1>
+    <p>We keep you in the pilot's seat while you reach your fundraising goals, jumping in to act as co-pilots as you need us along your journey. You can fund an initiative that others can get on board with, and improve the world we live in, all while staying on-task and on-time thanks to our user-friendly platform. Are you ready to take flight?</p>
+</div>
+<div class="detmin-imag text-center">
+    <img src="..\static\landing\assets\img\testimonial-bg.png">
+</div>
+
+<div class="button-cutom text-center">
+    <a href="{% url 'sign_up' %}" class="cutom">Get started</a>
+</div>
+
+{% endblock %}
+{% block extra_script %}
+<script src="{% static 'landing/assets/js/index.js' %}"></script>
+{% endblock %}

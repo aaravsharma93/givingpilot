@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'landing/assets/css/landing.css' %}" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;1,400;1,900&display=swap" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<div class="plan-journey-head">
+    <h4>Plan Your Journey</h4>
+
+    <div class="plan-route-head">
+        <h1>Determine Your Route</h1>
+    </div>
+    <div class="plan-para">
+        <p>Get started by determining which route is best for you, plotting your course, and creating a timeline so you reach your destinations effectively and on time.</p>
+    </div> 
+    <div class="detmin-imag">
+        <img src="..\static\landing\assets\img\testimonial-bg.png">
+    </div>
+    <div class="button-cutom text-center">
+        <a href="{% url 'sign_up' %}" class="cutom">Get started</a>
+    </div>
+</div>
+{% endblock %}
+{% block extra_script %}
+<script src="{% static 'landing/assets/js/index.js' %}"></script>
+{% endblock %}

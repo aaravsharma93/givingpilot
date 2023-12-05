@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<body>
+  <div class="container">
+    <h2 class="text-center">{{ title }}</h2>
+    
+    {% if mode == 'sign_up' %}
+    <p>From: {{ from_email }}</p>
+    <p>
+      In order to signup Giving Pilot Platform <a href="{{ url }}">Please click this URL</a>.
+    </p>
+    {% elif mode == 'forgot_password' %}
+    <p>From: {{ from_email }}</p>
+    In order to reset password <a href="{{ url }}">Please click this URL</a>.
+    {% elif mode == 'Contact_us' %}
+      <p>Name of Person = {{name}}<br>
+        Contact Details= {{email}}<br>
+        Message = {{content}}</p>
+  
+    {% elif mode == 'send-email' %}
+    <h1>Dear {{name}},</h1>
+
+    <p>I am delighted to invite you on behalf of {{orgname}} to become a member today.</p>
+    <p>For Join Our Campaign </p>
+    <a href="{{ url }}">Please click this URL</a>
+    {% endif %}
+  </div>
+</body>
+
+</html>

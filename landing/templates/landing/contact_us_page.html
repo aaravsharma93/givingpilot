@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'landing/assets/css/landing.css' %}" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;1,400;1,900&display=swap" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<div class="container-fluid custom">
+    <div class="row">
+        <div class="col-md-6 p-0">
+            <div class="lft-imag">
+            </div>
+        </div>
+        <div class="col-md-6 p-0">
+            <div class="rigt-content">
+                <form class="from-inline" method="POST" id="contact-form">
+                  {% csrf_token %}
+                    <h3>Contact us for anything.</h3>
+                    <h1>We are here to help.</h1>
+                    <div id="output" class="off" >
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <input type="text" name="firstname" class="form-control" id="firstname" placeholder="Enter your full name" required>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <input type="email" name="email" class="form-control" id="email" placeholder="Enter your email" required>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <textarea name="query" class="form-control" id="query" placeholder="Enter your message" required></textarea>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <button type="submit" id="sendbutton">SEND</button>
+                          <button id="loading-image" hidden
+                          ><img src="{% static 'accounts/assets/img/loading-buffering.gif' %}" style="width:25px;">
+                          </button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+<div class="button-cutom text-center">
+  <a href="{% url 'sign_up' %}" class="cutom">Get started</a>
+</div>
+
+
+
+{% endblock %}
+{% block extra_script %}
+<script src="{% static 'landing/assets/js/index.js' %}"></script>
+<script>
+$('#contact-form').on('submit', function(e){
+  $('#output').hide();
+  $('#sendbutton').hide();
+  $('#loading-image').removeAttr("hidden");
+   e.preventDefault();
+   $.ajax({
+          type : "POST", 
+          url: "{% url 'contactus' %}",
+          data: {
+            fullname : $('#firstname').val(),
+            email : $('#email').val(),
+            query : $('#query').val(),
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            dataType: "json",
+          },
+          success : function(json) {
+            //$('#loading-image').show();
+            // remove the value from the input
+            $('#output').text('');// remove the value from the input
+            $('#output').append(json.message.content);
+            $('#output').addClass('alert alert-info');
+            $('#loading-image').attr("hidden","true");
+            $('#sendbutton').show();
+            $('#output').show(); 
+            $('#contact-form').trigger("reset");
+            },
+            
+
+            // handle a non-successful response
+            error : function(xhr,errmsg,err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            },
+            complete: function(){
+                // $('#loading-image').hide();
+          //  $('#textme').show();
+          console.log("success")
+
+              }
+        
+    }); 
+         });
+</script>
+{% endblock %}

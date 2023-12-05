@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+
+{% endblock %}
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'accounts/assets/css/signup.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="signup" class="signup row w-100 m-0">
+  <div class="col-lg-7 col-xl-8 d-lg-none d-xl-none p-0 top">
+    <div class="title aniview speed1" data-av-animation="bounceInUp">
+      Sign in to Take <br> Flight for a <span>Cause</span>
+    </div>
+    <img src="{% static 'accounts/assets/img/signup-bg.png' %}" class="float-right top-img" alt="right-img">
+  </div>
+  <div class="col-lg-5 col-xl-4 left">
+    <div class="title d-none d-lg-block p-0 aniview speed1" data-av-animation="bounceInLeft">
+      Sign up to Take <br> Flight for a <span>Cause</span>
+    </div>
+    <div class="signup-form">
+      <div class="social-text mt-4 aniview speed2" data-av-animation="bounceInLeft">
+        Signup with social account
+      </div>
+      <div class="w-100 d-flex justify-content-center mt-4 mb-4">
+        <div class="social-icons d-flex justify-content-between">
+          <a class="aniview speed4" href="{% url 'social:begin' 'facebook' %}" data-av-animation="bounceInLeft">
+            <div class="facebook"><i class="fab fa-facebook social-icon"></i></div>
+          </a>
+          <a class="aniview speed3" href="{% url 'social:begin' 'google-oauth2' %}" data-av-animation="bounceInLeft">
+            <div class="twitter"><i class="fab fa-google-plus-g social-icon"></i></div>
+          </a>
+          <!-- <a class="aniview speed3" href="#" data-av-animation="bounceInLeft">
+            <div class="twitter"><i class="fab fa-twitter social-icon"></i></div>
+          </a> -->
+          <a class="aniview speed2" href="{% url 'social:begin' 'linkedin-oauth2' %}" data-av-animation="bounceInLeft">
+            <div class="linkedin"><i class="fab fa-linkedin-in social-icon"></i></div>
+          </a>
+        </div>
+      </div>
+      <div class="or position-relative aniview speed2" data-av-animation="bounceInLeft">
+        <hr>
+        <div style="font-size: 18px; letter-spacing: 3px; font-weight: 700;">OR</div>
+      </div>
+      <div class="signup-text aniview speed3" data-av-animation="bounceInLeft">
+        Signup with email
+      </div>
+      {% comment %} {% if message.content %} {% endcomment %}
+      <div id="output" class="off" >
+        {% comment %} class="alert alert-info" {{ message.content }} {% endcomment %}
+        
+      </div>
+      {% comment %} {% endif %} {% endcomment %}
+      
+      <form id="create-user-form" enctype="multipart/form-data" method="POST" class="aniview speed4"  data-av-animation="fadeIn" >
+        {% comment %} {% csrf_token %} {% endcomment %}
+        <div class="main-form form-group">
+          <div class="input-fullname mt-4" data-aos="flip-up" data-aos-delay="600">
+            <label for="fullname" class="text-cus-dark" style="font-weight: 700;">Your Full Name</label>
+            <input type="text" id="fullname" class="form-control" name="fullname" placeholder="Adam Voigt" required>
+          </div>
+          <div class="input-email mt-4" data-aos="flip-up" data-aos-delay="700">
+            <label for="email" class="text-cus-dark" style="font-weight: 700;">Email Address</label>
+            <input type="email" id="email" class="form-control"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="email" value="{{ email }}"
+              placeholder="example@email.com" required>
+          </div>
+          <div class="input-password1 mt-4" data-aos="flip-up" data-aos-delay="800">
+            <label for="password1" style="font-weight: 700;">Password</label>
+            <div class="password-view">
+              <input type="password" id="password1" class="form-control" name="password1"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password"  title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                required>
+              <i class="eye-icon1 eye-icon fas fa-eye text-cus-secondary" onclick="onToggleView('1')"></i>
+            </div>
+          </div>
+          <div class="input-password2 mt-4" data-aos="flip-up" data-aos-delay="900">
+            <label for="password2" style="font-weight: 700;">Confirm Password</label>
+            <div class="password-view">
+              <input type="password" id="password2" class="form-control" name="password2" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password"  title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                required>
+              <i class="eye-icon2 eye-icon fas fa-eye text-cus-secondary" onclick="onToggleView('2')"></i>
+              <span id='message'></span>
+            </div>
+          </div>
+          <div class="upload-logo mt-4">
+              <input type="file" class="form-control" id="profile_pic_store" name="profile_pic"  title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" hidden required/>
+              <div class="logo-img">
+                <img id="logo-img-src" class="img" src="/media/default-logo.png" alt="profile-logo">
+              </div>
+              <div class="logo-action">
+                <div class="sub-title">
+                  Profile Logo
+                </div>
+                <input type="file" id="input-logo"   title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" hidden required/>
+                <div class="btn-cus btn-cus-primary mt-auto" onclick="onClickUploadProfilePhoto()">Upload</div>
+              </div>
+          </div>
+          <div id="picresp"></div>
+          <button class="mt-4 btn-signup border-0 btn-cus-secondary w-100" id="textme" type="submit" data-aos="zoom-in-up"
+            data-aos-delay="1000">
+            Create
+          </button>
+          <button class="mt-4 btn-signup border-0 btn-cus-secondary w-100" id="loading-image"
+          ><img src="{% static 'accounts/assets/img/loading-buffering.gif' %}" class="loader  ">
+          </button>
+          
+          <div class="goto-login mt-4 d-flex flex-row" data-aos="flip-up" data-aos-delay="1100">
+            <p class="text-cus-dark m-0" style="font-weight: 700;">Already have an account?
+            </p><a href="{% url 'login' %}"><span class="text-cus-primary ml-1"><b>Login</b></span></a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-lg-7 col-xl-8 d-none d-lg-block p-0" style="z-index: -100" data-aos="zoom-in-down">
+    <img src="{% static 'accounts/assets/img/signup-bg.png' %}" class="float-right mt-5 right-img aniview speed4"
+      alt="right-img" data-av-animation="fadeIn">
+  </div>
+</div>
+{% endblock %}
+{% block extra_script %}
+<script>
+  $('#password1, #password2').on('keyup', function () {
+  if ($('#password1').val() == $('#password2').val()) {
+    $('#message').show();
+    $('#message').html('Password Matched').css('color', 'green');
+  } else 
+    $('#message').html("Password didn't Match").css('color', 'red');
+});
+</script>
+<script>
+$(document).ready(function(){ 
+  $("#textme").click(function()
+  {
+      $('#picresp').show();
+      var n = $("#logo-img-src").attr('src');
+      if (n== "/media/default-logo.png"){
+          $('#picresp').html("Profile Photo is Mandatory").css('color', 'red');
+      }
+  });
+});
+</script>
+<script>
+  function onToggleView(id) {
+    const password = $('#password' + id);
+    if (password.attr('type') === 'password') {
+      password.attr('type', 'text');
+      $('.eye-icon' + id).removeClass('fa-eye').addClass('fa-eye-slash');
+    } else {
+      password.attr('type', 'password');
+      $('.eye-icon' + id).removeClass('fa-eye-slash').addClass('fa-eye');
+    }
+  }
+  function onClickUploadProfilePhoto() {
+      document.getElementById('input-logo').click();
+  }
+  document.getElementById('input-logo').addEventListener('change', function () {
+        if (this.files && this.files[0]) {
+            let logInput = document.getElementById('profile_pic_store');
+            let img = document.getElementById('logo-img-src');
+            img.onload = () => {
+                URL.revokeObjectURL(img.src);  // no longer needed, free memory
+            }
+
+            img.src = URL.createObjectURL(this.files[0]); // set src to blob url
+
+            logInput.files = this.files;
+            // img.style.visibility = 'visible';
+        }
+    });
+</script>
+
+<script>
+$(document).ready(function(){
+  $('#loading-image').hide();
+    $('form :input').val('');
+});
+</script>
+<script>
+  const password = $('#password1');
+  if (password.attr('type') === 'text') {
+    password.attr('type', 'password');
+    $('.eye-icon' + id).removeClass('fa-eye-slash').addClass('fa-eye');
+  }
+  const password2 = $('#password2');
+  if (password2.attr('type') === 'text') {
+    password2.attr('type', 'password');
+    $('.eye-icon' + id).removeClass('fa-eye-slash').addClass('fa-eye');
+  } 
+ $('#loading-image').hide();
+ $('#output').text('')
+         $('#create-user-form').on('submit', function(e){
+           $('#textme').hide();
+
+             $('#loading-image').show();
+         e.preventDefault();
+         
+           $.ajax({
+                type : "POST", 
+                url: "{% url 'sign_up' %}",
+                data: {
+                 fullname : $('#fullname').val(),
+                 email : $('#email').val(),
+                 password1 : $('#password1').val(),
+                 password2 : $('#password2').val(),
+                 profile_pic : $('#profile_pic_store').val(),
+                 csrfmiddlewaretoken: '{{ csrf_token }}',
+                 dataType: "json",
+                },
+                success : function(json) {
+                  //$('#loading-image').show();
+            
+            $('#output').addClass('alert alert-info') // remove the value from the input
+            $('#output').text('');// remove the value from the input
+            $('#output').append(json.message.content);// remove the value from the input
+            //console.log(json.message.content);// log the returned json to the console
+            //console.log(json)
+            //console.log("success"); 
+            $('#create-user-form').trigger("reset");
+            $('#logo-img-src').val('');// another sanity check
+            $("#logo-img-src").attr("src","/media/default-logo.png");
+            $('#picresp').hide();
+            $('#message').hide();
+            },
+            
+
+            // handle a non-successful response
+            error : function(xhr,errmsg,err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            },
+            complete: function(){
+                $('#loading-image').hide();
+           $('#textme').show();
+
+              }
+        
+    }); 
+         });
+</script>
+{% comment %} <script type="text/javascript">
+$(document).ready(function(){
+    setTimeout(function(){
+        $("#output").hide("20000")
+        }, 30000);
+});
+</script> {% endcomment %}
+
+      
+{% endblock %}

@@ -1,0 +1,205 @@
+{% load static %}
+{% load utils %}
+{% load humanize %}
+<div id="frame-right-bar-on-pc" class="border-left border-bottom frame-right-bar">
+  <div class="d-flex flex-column container-fluid" style="padding: 25px">
+    <div class="text-uppercase text-cus-secondary" style="letter-spacing: 1.875px"><b>About the campaign</b></div>
+    <div class="company">
+      <div class="logo"><img class="img" src="{{ campaign.organization_logo.url }}" alt="logo"></div>
+      <div class="info float-right">
+        <div class="title">
+          {{ campaign.organization_description }}
+          {% if not is_public %}
+          <span class="edit-item ml-2 text-cus-primary" data-nav-link="?tab=tab-basic-info&tag=org-description">
+            <i class="fas fa-edit"></i>
+          </span>
+          {% endif %}
+        </div>
+        <div class="company-name">
+          {{ campaign.organization_name }}
+          {% if not is_public %}
+          <span class="edit-item ml-2 text-cus-primary" data-nav-link="?tab=tab-basic-info&tag=org-name">
+            <i class="fas fa-edit"></i>
+          </span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="date">
+      <div class="dots-and-line">
+        <div class="position-relative">
+          <div class="top-dot"></div>
+          <div class="line"></div>
+          <div class="bottom-dot"></div>
+        </div>
+      </div>
+      <div class="d-flex flex-column mb-3" style="font-size: 12px;">
+        <div class="d-flex justify-content-between">
+          <div class="text-cus-secondary text-uppercase"
+            style="font-size: 14px; font-weight: 700; font-family: 'Lato';">
+            starts
+          </div>
+          <div class=" text-cus-dark" style="font-weight: 600; font-size: 16px;">{{ campaign.start_date }}</div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <div class="text-cus-secondary text-uppercase"
+            style="font-size: 14px; font-weight: 700; font-family: 'Lato';">
+            ends
+          </div>
+          <div class="text-cus-dark" style="font-weight: 600; font-size: 16px;">{{ campaign.end_date }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column container-fluid" style="padding: 0px 31px 33px 38px">
+    <div class="contributors mt-4">
+      <div class="d-flex justify-content-between">
+        <div class="text-cus-secondary text-uppercase font-lato">
+          <b class="ls-2" style="font-size: 16px">Contributors</b>
+          <span class="text-cus-primary"
+            style="font-weight: 700; font-size: 16px; line-height: 1.875;">{{campaign.contributors|count_contributors}}</span>
+        </div>
+        <a href="#" class="text-cus-primary small text-uppercase details">See all</a>
+      </div>
+      <div class="photos-and-detail mt-3">
+
+        <div class="photos">
+          {% for contri in contributors|slice:"0:6" %}
+        <div class="photo">
+          <img src="{{ contri.user.profile.profile_pic|get_image_url }}" class="photo-img" alt="photo">
+        </div>
+          {% endfor %}
+        </div>
+
+        {% if contributors|length > 6 %}
+            <div class="ml-auto d-flex justify-content-center align-items-center">
+              <div class="detail">+ {{ contributors|get_contri_length }}K</div>
+            </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="goal-amount">
+    <div class="d-flex justify-content-between" style="padding-bottom: 11px">
+      <div class="text-cus-secondary text-uppercase ls-2"><b style="font-size: 16px">Fund Raising summary</b></div>
+      <a href="#" class="text-cus-primary text-uppercase small details">View Details</a>
+    </div>
+    <div class="amount-charged mt-1">
+      <div>
+        <span class="raised text-cus-dark">
+          <b style="font-size:16px; font-weight: 900; line-height: 1.5">${{ campaign.raised_fund|intcomma }}</b>
+        </span> of
+        ${{ campaign.goal_amount|intcomma }} raised
+      </div>
+      <div class="progress-bar mt-1">
+        <div class="full-bar"></div>
+        <div class="filled-bar" style="width: {{ campaign.raised_percentage }}% !important;">
+          {% comment %}
+          <div class="position-relative">
+            <div class="vertical-bar"></div>
+            <div class="circle"></div>
+            {% endcomment %}
+            {% comment %}
+            <div class="raised">${{ campaign.raised_fund|intcomma }}</div>
+            {% endcomment %}
+            {% comment %}
+            <div class="raised">${{ campaign.raised_fund|intcomma }}</div>
+          </div>
+          {% endcomment %}
+        </div>
+      </div>
+      {% comment %}
+      <div class="w-100 d-flex justify-content-between mt-1 mb-2" style="z-index: 100">
+        <div class="text-cus-dark"><b>$0.00</b></div>
+        <div class="text-cus-dark"><b>${{ campaign.goal_amount|intcomma }}</b></div>
+      </div>
+      {% endcomment %}
+    </div>
+  </div>
+  <div class="d-flex flex-column container-fluid" style="padding: 33px 24px 33px 35px">
+
+    <div class="manager-and-members">
+      <div class="d-flex justify-content-between">
+        <div class="text-cus-secondary text-uppercase font-lato ls-2">
+          <b>Campaign owner</b>
+        </div>
+        <a href="#" class="text-cus-primary small text-uppercase details">details</a>
+      </div>
+      <div class="info-and-detail mt-3">
+        <div class="info">
+          <div class="photo">
+            <img src="{{ campaign.owner.profile.profile_pic|get_image_url }}" alt="photo" class="photo-img">
+          </div>
+          <div class="personal-info">
+            <div class="name">{{ campaign.full_name }}</div>
+            {% if not campaign.is_email_private %}
+            <div class="email">
+              <i class="fas fa-envelope mr-2"></i>
+              {{ campaign.second_email}}
+            </div>
+            {% endif %}
+            {% if not campaign.is_mobile_private %}
+            <div class="phone"><i class="fas fa-phone mr-2"></i>{{ campaign.mobile }}</div>
+            {% endif %}
+          </div>
+        </div>
+        {% comment %} <div class="ml-auto d-flex justify-content-center align-items-center">
+          <div class="detail"> + 0 </div>
+        </div>
+        {% endcomment %}
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column container-fluid" style="padding: 33px 24px 33px 35px">
+
+    <div class="share-link">
+      <div class="d-flex justify-content-between" style="padding-bottom: 10px">
+        <div class="text-cus-secondary text-uppercase font-lato ls-2">
+          <b>Share link</b>
+        </div>
+        <nav style="display: flex; align-items: center; right: 0; z-index: 200;">
+          <ul class="preview-nav__list">
+            <li class="preview-nav__item">
+            <a href="https://web.whatsapp.com/send?text={% abs_url 'dashboard:cf_manager' campaign.id %}" data-action="share/whatsapp/share" class="preview-nav__link">
+                <img src="{% static 'dashboard/assets/img/icon-share-1.svg' %}" alt=""></a>
+          </li>
+          <li class="preview-nav__item">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={% abs_url 'dashboard:cf_manager' campaign.id %}" target="_blank"
+               class="preview-nav__link"><img src="{% static 'dashboard/assets/img/icon-share-2.svg' %}" alt=""></a>
+          </li>
+          <li class="preview-nav__item">
+            <a href = "https://telegram.me/share/url?url={% abs_url 'dashboard:cf_manager' campaign.id %}&text=Join%20My%20Campaign" class="preview-nav__link">
+                <img src="{% static 'dashboard/assets/img/icon-share-3.svg' %}" alt=""></a>
+          </li>
+          <li class="preview-nav__item">
+            <a href="mailto: insertemailhere@xyz.com?subject=Crowdfunding Email {% abs_url 'dashboard:cf_manager' campaign.id %}" class="preview-nav__link"><img src="{% static 'dashboard/assets/img/icon-share-4.svg' %}"
+                alt=""></a>
+          </li>
+            <li class="preview-nav__item">
+              <a href="#" class="preview-nav__link">
+                <img src="{% static 'dashboard/assets/img/icon-share-5.svg' %}" alt="">
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="search-container">
+        <input type="text" id="pc-search-bar" value={% abs_url 'dashboard:cf_public' campaign.id %} class="search-bar">
+        <div class="search-sharelink">
+          <img src="{% static 'dashboard/assets/img/copy-png.png' %}" alt="" style="width:16px">
+        </div>
+        <div class="gp-search-table-wrapper d-none">
+          <table id="gp-search-result" class="gp-search-result w-100">
+            {% include 'dashboard/__search_table.html' %}
+          </table>
+          <div class="nothing-found d-none">
+            Nothing Found
+          </div>
+        </div>
+      </div>
+      <a class="btn-cus btn-cus-secondary" href="/dashboard/new-campaign/{{ campaign.id }}/update">Edit Campaign</a>
+    </div>
+  </div>
+</div>

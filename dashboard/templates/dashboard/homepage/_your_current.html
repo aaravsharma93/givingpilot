@@ -1,0 +1,158 @@
+{% load utils %}
+{% load static %}
+<div class="current-and-previous campaigns-view">
+  <div id="current-campaigns" class="campaign-view your-current">
+    <div class="campaign-view-header">
+      <div class="title mr-5">
+        <span>Your Current</span> <br /> Campaigns
+      </div>
+      <div class="sub-text ml-5">
+{#        Certe, inquam, pertinax non possim accommodare torquatos nostros? quos tu paulo ante cum.#}
+      </div>
+    </div>
+    <div class="campaign-view-content">
+      <div class="row pl-5 pr-5">
+        {% for campaign in my_campaigns reversed %}
+        {% if not campaign.is_closed %}
+        <div class="col-lg-6 mb-4 pr-3 pl-3">
+          <div class="current-campaign-card">
+            <div class="cover-image">
+              <div>
+                <a href="{% url 'dashboard:cf_manager' campaign.id %}">
+                  <img src="{{ campaign.large_media_cover }}" alt="current-campaign-cover" />
+                </a>
+                <div class="campaign-type" style="font-size: 11px; letter-spacing: 2px;">Crowdfunding</div>
+                <div class="ownership">Manager</div>
+              </div>
+            </div>
+            <div class="pl-4 pr-4">
+              <h2 class="title">{{ campaign.title }}</h2>
+              <div class="company-info">
+                <div class="photo"></div>
+                <div class="name">{{ campaign.organization_name }}</div>
+              </div>
+              <div class="description">
+                {{ campaign.organization_description }}
+              </div>
+              <div class="current-state row pl-lg-0 pr-lg-0 pr-xl-4 pl-xl-4">
+                <div class="col-sm-4 d-flex flex-row">
+                  <div class="icon p-1">
+                    <img src="{% static 'dashboard/assets/img/pointer-png.svg' %}" />
+                  </div>
+                  <div class="ml-2">
+                    <div class="type-text">Goal</div>
+                    <div class="type-info text-cus-primary">${{ campaign.goal_amount }}</div>
+                  </div>
+                </div>
+                <div class="col-sm-4 d-flex flex-row">
+                  <div class="icon p-1">
+                    <img src="{% static 'dashboard/assets/img/chart-line-png.svg' %}" />
+                  </div>
+                  <div class="ml-2">
+                    <div class="type-text">Raised</div>
+                    <div class="type-info raised-text">${{ campaign.raised_fund }}</div>
+                  </div>
+                </div>
+                <div class="col-sm-4 d-flex flex-row">
+                  <div class="icon p-1">
+                    <img src="{% static 'dashboard/assets/img/hands-helping-png.svg' %}" />
+                  </div>
+                  <div class="ml-2">
+                    <div class="type-text">Total Contributors</div>
+                    <div class="type-info total-text">{{ campaign.contributors|count_contributors }}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="raised-info">
+                <strong>${{ campaign.raised_fund }}</strong>
+                of ${{campaign.goal_amount}} raised
+                {% if campaign.has_has_end_date %}
+                  <span class="before-dot"
+                  style="line-height: 1.429px; letter-spacing: 2px; color: #8A94A6; font-weight: 700; font-size: 14px; font-family: 'Lato';">
+                  ENDS IN <span
+                    style="font-weight: 400; font-size: 16px; color: #223B60; line-height: 1.25px; letter-spacing: 0px;">{{ campaign.end_date|days_until }}
+                    days</span>
+                </span>
+                {% endif %}
+              </div>
+            </div>
+            <!-- Progress Bar -->
+            <div class="progress-block">
+              <div class="progress-block__val" style="width: {{ campaign.raised_fund|calculate_percentage:campaign.goal_amount }}%!important;"></div>
+            </div>
+          </div>
+        </div>
+        {% endif %} {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div id="previous-campaigns" class="campaign-view your-previous" style="padding-top: 60px;">
+    <div class="campaign-view-header">
+      <div class="title mr-5"><span>Previous</span> Campaigns</div>
+      <div class="sub-text ml-5">
+{#        Certe, inquam, pertinax non possim accommodare torquatos nostros? quos#}
+{#        tu paulo ante cum.#}
+      </div>
+    </div>
+    <div class="campaign-view-content">
+      <div class="row pr-5 pl-5">
+        {% for campaign in my_campaigns reversed %} {% if not campaign.is_closed %}
+        <div class="col-xl-3 col-lg-4 col-md-6 mb-4 pr-2 pl-2">
+          <div class="current-campaign-card">
+            <div class="cover-image">
+              <div>
+                <img src="{{ campaign.large_media_cover_small }}" alt="current-campaign-cover" />
+                <div class="campaign-type" style="font-size: 11px; letter-spacing: 2px;">Crowdfunding</div>
+                <div class="ownership">Manager</div>
+              </div>
+            </div>
+            <!-- <div class="pl-4 pr-4"> -->
+            <div>
+              <h2 class="title" style="font-size: 18px; font-weight: 400;">{{ campaign.title }}</h2>
+              <div class="company-info">
+                <div class="photo"></div>
+                <div class="name">{{ campaign.organization_name }}</div>
+              </div>
+              <div class="description">
+                {{ campaign.organization_description }} This library allows you
+                to easily compose images together without messing around with
+                canvas. Canvas can be kind of a pain to work with sometimes,
+                especially if you just need a canvas context to do something
+                relatively simple like merge some images together. merge-images
+                abstracts away all the repetitive tasks into one simple function
+                cal
+              </div>
+              <div class="raised-info" style="margin-top: 22px; border-bottom: 1px solid #e6e8ec;">
+                <div class="before-dot" style="margin-left: -25px; margin-bottom: 8px;">
+                    {% if campaign.has_end_date %}
+                  <span
+                    style="font-weight: 700; font-size: 14px; letter-spacing: 2px; line-height: 1.429; color: #8A94A6;">ENDS
+                    IN
+                    <span
+                      style="font-weight: 400; font-size: 16px; line-height: 1.25; letter-spacing: 0; color: #223B60;">{{ campaign.end_date|days_until }}
+                      days</span>
+                  </span>
+                        {% endif %}
+                </div>
+              </div>
+              <div class="raised-info" style="margin-top: 9px; margin-left: 15px;">
+                <span>
+                  <strong
+                    style="font-weight: 900; font-size: 16px; color: #223B60;">${{ campaign.raised_fund }}</strong>
+                  of ${{campaign.goal_amount}} raised
+                </span>
+              </div>
+            </div>
+            <!-- Progress Bar -->
+            <div class="progress-block">
+              <div class="progress-block__val" style="width: {{ campaign.raised_fund|calculate_percentage:campaign.goal_amount }}%!important;"></div>
+            </div>
+          </div>
+        </div>
+        {% endif %} {% endfor %}
+      </div>
+    </div>
+
+
+  </div>
+</div>

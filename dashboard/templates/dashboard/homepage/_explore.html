@@ -1,0 +1,547 @@
+{% load static %}
+{% load humanize %}
+{% load url_thumbnail %}
+{% load utils %}
+<div class="explore campaigns-view active-tab">
+  <div class="campaign-view featured" style="padding-top: 30px;">
+    <div class="campaign-view-header">
+      <div class="title">
+        <span>Recently</span> Funded
+      </div>
+      <div class="sub-text ml-4">
+{#        Certe, inquam, pertinax non possim accommodare torquatos nostros? quos tu paulo ante cum.#}
+      </div>
+    </div>
+    <div id="content-top-bar" class="border-bottom border-right container-fluid"
+      style="position:relative; margin-top: 28px; padding-left: 50px;">
+      <div class="on-pc">
+        <div class="d-flex justify-content-between">
+          <div class="d-flex flex-row w-100">
+            <div data-tab-link="crowdfunding" class="group-item item w-100 active" style="font-size: 20px; letter-spacing: 2px;">
+              <svg style="margin-right: 23px;" width="40px" height="40px" viewbox="0 0 40 40" version="1.1"
+                xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M13.913 0C11.5217 0 9.56522 1.95652 9.56522 4.34783C9.56522 6.73913 11.5217 8.69565 13.913 8.69565C14.2626 8.69565 14.5922 8.63826 14.9183 8.56L15.6522 10.1087C12.5374 11.9157 10.4348 15.2783 10.4348 19.1304C10.4348 20.1322 10.5774 21.0939 10.8426 22.0113L8.01652 22.8809C7.21323 21.6323 5.83246 20.8753 4.34783 20.8696C1.95652 20.8696 0 22.8261 0 25.2174C0 27.6087 1.95652 29.5652 4.34783 29.5652C5.62365 29.5619 6.83402 29 7.66001 28.0277C8.486 27.0553 8.84476 25.77 8.64174 24.5104L11.4678 23.6409C12.82 26.4308 15.3366 28.4801 18.3426 29.2391L18.0696 31.3043C15.7678 31.4061 13.913 33.3252 13.913 35.6522C13.913 38.0435 15.8696 40 18.2609 40C20.6522 40 22.6087 38.0435 22.6087 35.6522C22.6087 33.7974 21.4235 32.2252 19.7826 31.6035L20.0548 29.5104C20.3261 29.5313 20.5939 29.5652 20.8696 29.5652C23.7809 29.5652 26.393 28.3426 28.2878 26.413L31.8209 29.2939C31.4849 29.911 31.3074 30.6018 31.3043 31.3043C31.3043 33.6957 33.2609 35.6522 35.6522 35.6522C38.0435 35.6522 40 33.6957 40 31.3043C40 28.913 38.0435 26.9565 35.6522 26.9565C34.6478 26.9594 33.6764 27.3152 32.9078 27.9617L29.4296 25.0817C32.1382 21.2075 31.8924 15.9936 28.8313 12.3913L31.5217 9.72783C32.231 10.1955 33.0635 10.4416 33.913 10.4348C36.3043 10.4348 38.2609 8.47826 38.2609 6.08696C38.2609 3.69565 36.3043 1.73913 33.913 1.73913C31.5217 1.73913 29.5652 3.69565 29.5652 6.08696C29.5652 6.97043 29.813 7.7887 30.2722 8.47826L27.6087 11.1687C25.7272 9.57043 23.3383 8.69379 20.8696 8.69565C19.6263 8.69251 18.3927 8.91343 17.2278 9.34783L16.4957 7.82609C17.5539 7.0313 18.2609 5.76783 18.2609 4.34783C18.2609 1.95652 16.3043 0 13.913 0ZM13.913 1.73926C15.3635 1.73926 16.5217 2.89752 16.5217 4.34795C16.5217 5.79839 15.3635 6.95665 13.913 6.95665C12.4626 6.95665 11.3044 5.79839 11.3044 4.34795C11.3044 2.89752 12.4626 1.73926 13.913 1.73926ZM33.913 3.47803C35.3635 3.47803 36.5217 4.63629 36.5217 6.08672C36.5217 7.53716 35.3635 8.69542 33.913 8.69542C32.4626 8.69542 31.3044 7.53716 31.3044 6.08672C31.3044 4.63629 32.4626 3.47803 33.913 3.47803ZM20.8696 10.4346C25.6826 10.4346 29.5652 14.3172 29.5652 19.1302C29.5652 23.9433 25.6826 27.8259 20.8696 27.8259C16.0565 27.8259 12.1739 23.9433 12.1739 19.1302C12.1739 14.3172 16.0565 10.4346 20.8696 10.4346ZM4.34783 22.6089C5.79827 22.6089 6.95653 23.7671 6.95653 25.2176C6.95653 26.668 5.79827 27.8263 4.34783 27.8263C2.8974 27.8263 1.73914 26.668 1.73914 25.2176C1.73914 23.7671 2.8974 22.6089 4.34783 22.6089ZM35.6522 28.6958C37.1026 28.6958 38.2609 29.8541 38.2609 31.3045C38.2609 32.7549 37.1026 33.9132 35.6522 33.9132C34.2017 33.9132 33.0435 32.7549 33.0435 31.3045C33.0435 29.8541 34.2017 28.6958 35.6522 28.6958ZM18.2609 33.0435C19.7113 33.0435 20.8696 34.2017 20.8696 35.6522C20.8696 37.1026 19.7113 38.2608 18.2609 38.2608C16.8104 38.2608 15.6522 37.1026 15.6522 35.6522C15.6522 34.2017 16.8104 33.0435 18.2609 33.0435Z"
+                  id="surface1" fill="#00AEEF" stroke="none" />
+              </svg>
+              Crowdfunding
+            </div>
+            <div data-tab-link="peer" class="group-item item w-100" style="font-size: 20px; letter-spacing: 2px;">
+              <svg style="margin-right: 23px;" width="42px" height="40px" viewbox="0 0 42 40" version="1.1"
+                xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M24.5582 24.3031C24.8464 24.632 24.9352 25.0906 24.7905 25.5032C24.6458 25.9158 24.29 26.2186 23.8596 26.2954C23.4291 26.3722 22.9906 26.2112 22.7121 25.8741C20.5267 23.2976 17.3178 21.8141 13.9394 21.8183C7.57879 21.8183 2.42424 26.9728 2.42424 33.3322L2.42424 38.788C2.42424 39.4574 1.88156 40.0001 1.21212 40.0001C0.542685 40.0001 8.19823e-17 39.4574 0 38.788L0 33.3322C0 25.6341 6.24 19.3941 13.9394 19.3941C18.0285 19.39 21.9123 21.1854 24.5582 24.3031L24.5582 24.3031ZM41.2121 38.7877C41.2121 39.4572 40.6694 39.9998 40 39.9998C39.3306 39.9998 38.7879 39.4572 38.7879 38.7877L38.7879 36.3629C38.7879 32.3465 35.5315 29.0907 31.5151 29.0907C27.4976 29.0907 24.2424 32.3459 24.2424 36.3629L24.2424 38.7877C24.2424 39.4572 23.6997 39.9998 23.0303 39.9998C22.3609 39.9998 21.8182 39.4572 21.8182 38.7877L21.8182 36.3629C21.8182 31.0071 26.1588 26.6665 31.5151 26.6665C36.8703 26.6665 41.2121 31.0077 41.2121 36.3629L41.2121 38.7877ZM13.9394 15.7576C9.58788 15.7576 6.06061 12.2303 6.06061 7.87879C6.06061 3.52727 9.58788 0 13.9394 0C18.2909 0 21.8182 3.52727 21.8182 7.87879C21.8182 12.2303 18.2909 15.7576 13.9394 15.7576ZM13.9394 13.3334C15.8881 13.3334 17.6888 12.2938 18.6632 10.6061C19.6375 8.91849 19.6375 6.83923 18.6632 5.15159C17.6888 3.46395 15.8881 2.42432 13.9394 2.42432C10.9269 2.42432 8.48485 4.8664 8.48485 7.87886C8.48485 10.8913 10.9269 13.3334 13.9394 13.3334L13.9394 13.3334ZM31.5152 23.6361C28.5027 23.6361 26.0606 21.1941 26.0606 18.1816C26.0606 15.1691 28.5027 12.7271 31.5152 12.7271C34.5276 12.7271 36.9697 15.1691 36.9697 18.1816C36.9697 21.1941 34.5276 23.6361 31.5152 23.6361ZM31.5152 21.212C33.1887 21.212 34.5455 19.8553 34.5455 18.1817C34.5455 16.5081 33.1887 15.1514 31.5152 15.1514C29.8416 15.1514 28.4848 16.5081 28.4848 18.1817C28.4848 19.8553 29.8416 21.212 31.5152 21.212Z"
+                  id="Shape" fill="#6B7C94" stroke="none" />
+              </svg>
+              Peer to Peer
+              <!-- <div class="new-campaign new-campaign-pc btn-cus btn-cus-secondary" style="width: 100px; height: 26px; font-size: 14px; letter-spacing: 0.58px; font-style: italic; font-weight: 400; padding: 0px !important; 
+                 text-transform: inherit; margin-left: 15px;">
+                Coming Soon
+              </div> -->
+            </div>
+            <div data-tab-link="event" class="group-item item w-100" style="font-size: 20px; letter-spacing: 2px;">
+              {% comment %} <svg style="margin-right: 23px;" width="42px" height="40px" viewbox="0 0 42 40" version="1.1"
+                xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M24.5582 24.3031C24.8464 24.632 24.9352 25.0906 24.7905 25.5032C24.6458 25.9158 24.29 26.2186 23.8596 26.2954C23.4291 26.3722 22.9906 26.2112 22.7121 25.8741C20.5267 23.2976 17.3178 21.8141 13.9394 21.8183C7.57879 21.8183 2.42424 26.9728 2.42424 33.3322L2.42424 38.788C2.42424 39.4574 1.88156 40.0001 1.21212 40.0001C0.542685 40.0001 8.19823e-17 39.4574 0 38.788L0 33.3322C0 25.6341 6.24 19.3941 13.9394 19.3941C18.0285 19.39 21.9123 21.1854 24.5582 24.3031L24.5582 24.3031ZM41.2121 38.7877C41.2121 39.4572 40.6694 39.9998 40 39.9998C39.3306 39.9998 38.7879 39.4572 38.7879 38.7877L38.7879 36.3629C38.7879 32.3465 35.5315 29.0907 31.5151 29.0907C27.4976 29.0907 24.2424 32.3459 24.2424 36.3629L24.2424 38.7877C24.2424 39.4572 23.6997 39.9998 23.0303 39.9998C22.3609 39.9998 21.8182 39.4572 21.8182 38.7877L21.8182 36.3629C21.8182 31.0071 26.1588 26.6665 31.5151 26.6665C36.8703 26.6665 41.2121 31.0077 41.2121 36.3629L41.2121 38.7877ZM13.9394 15.7576C9.58788 15.7576 6.06061 12.2303 6.06061 7.87879C6.06061 3.52727 9.58788 0 13.9394 0C18.2909 0 21.8182 3.52727 21.8182 7.87879C21.8182 12.2303 18.2909 15.7576 13.9394 15.7576ZM13.9394 13.3334C15.8881 13.3334 17.6888 12.2938 18.6632 10.6061C19.6375 8.91849 19.6375 6.83923 18.6632 5.15159C17.6888 3.46395 15.8881 2.42432 13.9394 2.42432C10.9269 2.42432 8.48485 4.8664 8.48485 7.87886C8.48485 10.8913 10.9269 13.3334 13.9394 13.3334L13.9394 13.3334ZM31.5152 23.6361C28.5027 23.6361 26.0606 21.1941 26.0606 18.1816C26.0606 15.1691 28.5027 12.7271 31.5152 12.7271C34.5276 12.7271 36.9697 15.1691 36.9697 18.1816C36.9697 21.1941 34.5276 23.6361 31.5152 23.6361ZM31.5152 21.212C33.1887 21.212 34.5455 19.8553 34.5455 18.1817C34.5455 16.5081 33.1887 15.1514 31.5152 15.1514C29.8416 15.1514 28.4848 16.5081 28.4848 18.1817C28.4848 19.8553 29.8416 21.212 31.5152 21.212Z"
+                  id="Shape" fill="#6B7C94" stroke="none" /></svg> {% endcomment %}
+                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAADdUlEQVR4nO3bS4gcRRzH8U/2YVCzElyjqIhEDKgXCSZ4FYMSH0efR/XmTYngxauIp+BBcVG86MV4yEVkiY8QEXxGEx9gohJRFLMsPtYHMXHHQ/UyPcNMb9dsT1dg6wt12O1//+tXv62q2en+F5nMumZDg7nOwfWYxZm+ayfwTWS+bbiyL/8UfsYR/DuazOaZwdP4DZ0h7S9cEZHzKpyqyPd70edMIyNYA1tw1HCh5bYnIu+jNXMeLTQk4+2SmA9xD3bghlL7qrh+AufVyLlRWC4dHOvLtQP34qNSvwcaG00kt5VEvCqsz0E8VIp7BZMVOTdgrhT/8JC4Kewrxe2O1N4ILxad/4ELK+ImcFBX7BvCGu/ncr2D+kC1WbNYKmJfiNTeCO8Wnb9ZI3ZW2LlXBndGMOUZ7MW83k3va1xaI+9bRfyhSO2NcLjofH/N+Bm8hGXVG9s+wbA67C/uOVxbdR8To944Akt4QPhfYS8+w6/F77/A87gRd2OxLVHDNq5x8jkeSdDvQNqcAWcl2YDUAlKTDUgtIDXZgNQCUpMNSC0gNdmA1AJSkw1ILSA1696ANr8OX42brG76Mt7Bt2NXpF0DDgrP/erwo7j3CCPT5hI4HhF7bGwq+mhzBuwS/qpVT3rhP/wwfjmBNg1Yxvct9leL/CnQUj+bcHHkPSfx5xi09NCGAZcI7wer3h4NYhHXCUaMjTaWwAXYPMJ9m4t7x0obM+C48MJja+R934kvqoimrT3g46Kddaz7T4FsQGoBqckGpBaQmmxAagGpyQakFpCabEBqAanJBqQWkJoUZXLbcDuuFb7zLwrFz69joW0xbRqwVSiNvcPggxr/4Dk8gb/bEtXWEtgl1ArfqTv4BeFhyVLx87nCOYH31asTTk7dYuntwl+3Izwan8M1peuTwiuzQ7r1wkcEQ1YjabF0uVx+WHHzJL4s4k7jrop8k3hW14SnVum/XC4/V1t1g+zWW+E9PSDmvlLM4zVyTuA93XNGwx6mTuO1Uu5bY4Q3ycoU7OATYcA7dY+4zBfXFoSjMHW4pZTzMb1HZnbi/qKvlZj5ZoYyGlv0HoQY1l6OyDmlu2es1j7FRQ2MY01sEtZr1bG5ByNzHqjI1RHOGTyJ89cqvsmDk9PCYYjL9E73X8Tv0jO4WTgsWeYUfhJm3enRZGYymRL/A8+g+btfD2hmAAAAAElFTkSuQmCC"/>
+              
+              Event Ticketing
+              <div class="new-campaign new-campaign-pc btn-cus btn-cus-secondary" style="width: 100px; height: 26px; font-size: 14px; letter-spacing: 0.58px; font-style: italic; font-weight: 400; padding: 0px !important; 
+                 text-transform: inherit; margin-left: 15px;">
+                Coming Soon
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="crowdfunding-tabss">
+      <div class="campaign-view-content">
+        <div class="content-body">
+          <div id="featured-ms">
+            <!-- Dashboard Main Slider -->
+            <section class="dash-main-slider">
+              <div class="container" style="padding: 0 0 0 20px;">
+              {% if campaigns|length %}
+                <div class="dash-main-slider__nav">
+                  <button class="splide__arrow splide__arrow--prev" type="button" aria-label="Previous slide">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+                      <path d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z">
+                      </path>
+                    </svg>
+                  </button>
+                  <button class="splide__arrow splide__arrow--next" type="button" aria-label="Next slide">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+                      <path d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z">
+                      </path>
+                    </svg>
+                  </button>
+                </div>
+              {% endif %}
+                <div class="dash-main-slider-row">
+                  <div class="dash-main-slider-col__primary">
+                    <!-- Dashboard Main Primary Slider -->
+                    <div class="dash-main-slider__primary">
+                      <div id="sliderDashMainPrimary" class="splide">
+                        {% if campaigns|length %}
+                            <div class="splide__track">
+                              <ul class="splide__list">
+                                {% with campaign=campaigns.0 %}
+                                <li class="splide__slide">
+                                  <div class="splide__slide__container">
+                                    <a href="{% url 'dashboard:cf_public' campaign.id %}">
+                                      <img src="{{ campaign.large_media_cover }}" alt="Sample Image 01">
+                                    </a>
+                                    <a class="dash-main-slider__cat"
+                                      href="{% url 'dashboard:cf_public' campaign.id %}">CrowdFunding</a>
+                                  </div>
+
+                                  <div class="dash-main-slider__content">
+                                    <div class="row">
+                                    <div class= 'col-6'><div class="dash-main-slider__header">
+                                      <h3>
+                                        <a class="dash-main-slider__title" href="#">{{ campaign.title }}</a>
+                                      </h3>
+                                    </div>
+                                    <a class="dash-main-slider__credentials" href="#">
+                                      <div class="dash-main-slider__thumb">
+                                        <img src="https://picsum.photos/id/10/20/20" alt="">
+                                      </div>
+                                      <div class="dash-main-slider__auth">
+                                        {{ campaign.organization_name }}
+                                      </div>
+                                    </a>
+
+                                    <!-- Slide Excerpt -->
+                                    <div class="dash-main-slider__excerpt">
+                                      <div class="only-two-lines">
+                                        {{ campaign.description|safe }}
+                                      </div>
+                                    </div></div>
+                                    <div class="col-6">
+                                      {% if campaign.days != 0 %}
+                                    <div class='peer-invi new-campaign new-campaign-pc btn-cus btn-cus-secondary' data-toggle="modal" data-url="{% url 'dashboard:cf_public' campaign.id %}" data-namee="{{ campaign.organization_name }}" data-target="#exampleModalCenter" onclick="toGetUrl(this)">Send invitation</div>
+                                    {% endif %}
+                                    </div></div>
+
+                                    <div class="dash-main-slider__details">
+                                      <div class="collect-block">
+                                        <p>
+                                          <strong>${{ campaign.raised_fund|intcomma }}</strong> of
+                                          ${{ campaign.goal_amount|add:"0"|intcomma }} raised
+                                        </p>
+                                      </div>
+                                      <div class="remains-block">
+                                          {% if campaign.days == 0 %}
+                                            <div class="remains-block__label">Campaign Concluded</div>
+                                            <div class="remains-block__val"></div>
+                                          {% else %}
+                                            <div class="remains-block__label">Ends in</div>
+                                            <div class="remains-block__val">{{campaign.days}} days</div>
+                                          {% endif %}
+                                      </div>
+                                      
+                                    </div>
+                                    <div class="progress-block">
+                                      <div class="progress-block__val" style="width: {{ campaign.raised_fund|calculate_percentage:campaign.goal_amount }}%"></div>
+                                    </div>
+                                  </div>
+                                </li>
+                                {% endwith %}
+                              </ul>
+                            </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="dash-main-slider-col__secondary">
+                    <!-- Dashboard Main Secondary Slider -->
+                    <div class="dash-main-slider__secondary">
+                      <div id="sliderDashMainSecondary" class="splide">
+                      {% if campaigns|length %}
+                        <div class="splide__track">
+                          <ul class="splide__list">
+                            {% for campaign in campaigns %}
+                            <li class="splide__slide">
+                              <div class="splide__slide__container">
+                                <a href="{% url 'dashboard:cf_public' campaign.id %}">
+                                  <img src="{{ campaign.large_media_cover_small }}" alt="">
+                                </a>
+                                <a class="dash-main-slider__cat" href="#">CrowdFunding</a>
+                              </div>
+                              <div class="dash-main-slider__content">
+                                <div class="dash-main-slider__header">
+                                  <h3><a class="dash-main-slider__title" href="#">{{ campaign.title }}</a></h3>
+                                </div>
+                                <a class="dash-main-slider__credentials" href="#">
+                                  <div class="dash-main-slider__thumb">
+                                    <img src="https://picsum.photos/id/30/20/20" alt="">
+                                  </div>
+                                  <div class="dash-main-slider__auth">
+                                    {{ campaign.organization_name }}
+                                  </div>
+                                </a>
+                                <div class="dash-main-slider__excerpt">
+                                  <div class="only-two-lines">
+                                    {{ campaign.description|safe }}
+                                  </div>
+                                </div>
+                                {% if campaign.days != 0 %}
+                                <div class='peer-invi new-campaign new-campaign-pc btn-cus btn-cus-secondary' data-toggle="modal" data-url="{% url 'dashboard:cf_public' campaign.id %}" data-namee="{{ campaign.organization_name }}" data-target="#exampleModalCenter" onclick="toGetUrl(this)">Send invitation</div>
+                                {% endif %}
+                                <div class="dash-main-slider__details">
+                                  <div class="remains-block" style="border-bottom: 2px solid #e6e8ec;">
+                                    {% if campaign.days == 0 %}
+                                      <div class="remains-block__label">Campaign Concluded</div>
+                                      <div class="remains-block__val"></div>
+                                    {% else %}
+                                      <div class="remains-block__label">Ends in</div>
+                                      <div class="remains-block__val">{{campaign.days}} days</div>
+                                    {% endif %}
+                                  </div>
+                                  
+                                  <div class="collect-block" style="margin-top: 22px!important;">
+                                    <p>
+                                      <strong>${{ campaign.raised_fund|intcomma }}</strong>
+                                      of ${{ campaign.goal_amount|add:"0"|intcomma }} raised
+                                    </p>
+                                  </div>
+                                </div>
+                                <div class="progress-block">
+                                  <div class="progress-block__val" style="width: {{ campaign.raised_fund|calculate_percentage:campaign.goal_amount }}%">
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+                      {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div class="campaign-view recently-added border-bottom">
+        <div class="campaign-view-header" style="padding-top: 20px;">
+          <div class="title"><span>Recently</span> Launched</div>
+          <div class="see-all">
+            <div class="see-all-btn btn-cus">See All</div>
+          </div>
+        </div>
+        <div class="campaign-view-content">
+          <div class="content-body">
+            <section class="dash-slider" style="padding: 0 50px;">
+              <div id="sliderDash" class="splide">
+              {% if campaigns|length %}
+                <div class="splide__track">
+                  <ul class="splide__list">
+                    {% for campaign in campaigns %}
+                    <li class="splide__slide">
+                      <div class="splide__slide__container">
+                        <a href="{% url 'dashboard:cf_public' campaign.id %}">
+                          <img src="{{ campaign.large_media_cover_small }}" alt="">
+                        </a>
+                        <a class="dash-main-slider__cat" href="#">CrowdFunding</a>
+                      </div>
+                      <div class="dash-main-slider__content">
+                        <div class="dash-main-slider__header">
+                          <h3>
+                            <a class="dash-main-slider__title" href="#">{{ campaign.title }}</a>
+                          </h3>
+                        </div>
+                        <a class="dash-main-slider__credentials" href="#">
+                          <div class="dash-main-slider__thumb">
+                            <img src="https://picsum.photos/id/30/20/20" alt="">
+                          </div>
+                          <div class="dash-main-slider__auth">
+                            {{ campaign.organization_name }}
+                          </div>
+                        </a>
+                        <div class="dash-main-slider__excerpt">
+                          <div class="only-two-lines">
+                            {{ campaign.description|safe }}
+                          </div>
+                        </div>
+                        {% if campaign.days != 0 %}
+                        <div class='peer-invi new-campaign new-campaign-pc btn-cus btn-cus-secondary' data-toggle="modal" data-url="{% url 'dashboard:cf_public' campaign.id %}" data-namee="{{ campaign.organization_name }}" data-target="#exampleModalCenter" onclick="toGetUrl(this)">Send invitation</div>
+                        {% endif %}
+                        <div class="dash-main-slider__details">
+                          <div class="remains-block">
+                            {% if campaign.days == 0 %}
+                              <div class="remains-block__label">Campaign Concluded</div>
+                              <div class="remains-block__val"></div>
+                            {% else %}
+                              <div class="remains-block__label">Ends in</div>
+                              <div class="remains-block__val">{{campaign.days}} days</div>
+                            {% endif %}
+                          </div>
+                          <div class="collect-block">
+                            <p>
+                              <strong>${{ campaign.raised_fund|intcomma }}</strong> of
+                              ${{ campaign.goal_amount|add:"0"|intcomma }} raised
+                            </p>
+                          </div>
+                        </div>
+                        <div class="progress-block">
+                          <div class="progress-block__val" style="width: {{ campaign.raised_fund|calculate_percentage:campaign.goal_amount }}%"></div>
+                        </div>
+                      </div>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div class="campaign-view by-category border-bottom" style="padding-top:40px">
+        <div class="campaign-view-header">
+          <div class="title" style="width: 270px; padding: 0 0 20px 0;"><span>Explore</span> by <br> Category</div>
+          <div class="see-all">
+            <div class="see-all-btn btn-cus">See All</div>
+          </div>
+        </div>
+        <div class="campaign-view-content">
+          {% if campaigns|length %}
+          <aside class="sidebar">
+            <div class="info-text">
+            </div>
+            <div class="sidebar-items mt-4" id="category-sd">
+                {% for cat in categories %}
+                  <div class="sidebar-item cat-options" id="{{ cat.id }}" data-key="{{ cat.id }}">{{ cat.name }}</div>
+                {% endfor %}
+            </div>
+          <div class="campaign-btn position-absolute" onclick="goToCreateNewCampaign()">
+              <div class="btn-cus btn-cus-secondary" >Start A New Campaign</div>
+          </div>
+          </aside>
+          {% endif %}
+          <!-- Dashboard Slider -->
+          {% if campaigns|length %}
+              {% for cat_camp in campaigns_by_cat %}
+                  <section class="dash-slider cat-section" data-key="{{ cat_camp.category }}" id="campaign-{{ cat_camp.category }}" style="margin-left: 300px;display: none">
+                    <div class="splide cat-section-slider">
+                      <div class="splide__track">
+                        <ul class="splide__list">
+                          {% if cat_camp.campaigns|length %}
+                          {% for campaign in cat_camp.campaigns %}
+                          <li class="splide__slide">
+                            <div class="splide__slide__container">
+                              <a href="{% url 'dashboard:cf_public' campaign.id %}">
+                                <img src="{{ campaign.large_media_cover_small }}" alt="">
+                              </a>
+                              <a class="dash-main-slider__cat" href="#">CrowdFunding</a>
+                            </div>
+                            <div class="dash-main-slider__content">
+                              <div class="dash-main-slider__header">
+                                <h3><a class="dash-main-slider__title" href="#">{{ campaign.title }}</a>
+                                </h3>
+                              </div>
+                              <a class="dash-main-slider__credentials" href="#">
+                                <div class="dash-main-slider__thumb">
+                                  <img src="https://picsum.photos/id/30/20/20" alt="">
+                                </div>
+                                <div class="dash-main-slider__auth">
+                                  {{ campaign.organization_name }}
+                                </div>
+                              </a>
+                              <div class="dash-main-slider__excerpt">
+                                <div class="only-two-lines">
+                                  {{ campaign.description|safe }}
+                                </div>
+                              </div>
+                              <div class="dash-main-slider__details">
+                                  {% if campaign.has_goal_amount %}
+                                <div class="collect-block">
+                                  <p>
+                                    <strong>${{ campaign.raised_fund|intcomma }}</strong> of
+                                    ${{ campaign.goal_amount|add:"0"|intcomma }} raised
+                                  </p>
+                                </div>
+                                  {% endif %}
+                                  {% if campaign.days != 0 %}
+                                  <div class='peer-invi new-campaign new-campaign-pc btn-cus btn-cus-secondary' data-toggle="modal" data-url="{% url 'dashboard:cf_public' campaign.id %}" data-namee="{{ campaign.organization_name }}" data-target="#exampleModalCenter" onclick="toGetUrl(this)">Send invitation</div>
+                                  {% endif %}
+                                <div class="remains-block">
+                                  {% if campaign.days == 0 %}
+                                    <div class="remains-block__label">Campaign Concluded</div>
+                                    <div class="remains-block__val"></div>
+                                  {% else %}
+                                    <div class="remains-block__label">Ends in</div>
+                                    <div class="remains-block__val">{{campaign.days}} days</div>
+                                  {% endif %}
+                                </div>
+                              </div>
+                              {% if campaign.has_goal_amount %}
+                              <div class="progress-block">
+                                <div class="progress-block__val" style="width: {{ campaign.raised_fund|calculate_percentage:campaign.goal_amount }}%"></div>
+                              </div>
+                              {% endif %}
+                            </div>
+                          </li>
+                          {% endfor %}
+                              {% else %}
+                              <li class="splide__slide">
+                            <div class="splide__slide__container">
+                              <a href="#">
+                                <img src="" alt="">
+                              </a>
+                            </div>
+                            <div class="dash-main-slider__content">
+                              <div class="dash-main-slider__header">
+                                <h3><a class="dash-main-slider__title" href="#"></a>
+                                </h3>
+                              </div>
+                              <a class="dash-main-slider__credentials" href="#">
+                                <div class="dash-main-slider__thumb">
+                                </div>
+                                <div class="dash-main-slider__auth">
+                                </div>
+                              </a>
+                              <div class="dash-main-slider__excerpt">
+                                <div class="only-two-lines">
+                                </div>
+                              </div>
+                              <div class="dash-main-slider__details">
+                                <div class="collect-block">
+                                  <p>
+                                    <strong></strong>
+                                  </p>
+                                </div>
+                                <div class="remains-block">
+                                </div>
+                              </div>
+                              <div class="progress-block">
+                                <div class="progress-block__val" style="width: 0%"></div>
+                              </div>
+                            </div>
+                          </li>
+                          {% endif %}
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+              {% endfor %}
+        {% endif %}
+        </div>
+      </div>
+      <div class="campaign-view recommended" style="display:none">
+        <div class="campaign-view-header">
+          <div class="title"><span>Recommended</span> for you</div>
+          <div class="see-all">
+            <div class="see-all-btn btn-cus">See All</div>
+          </div>
+        </div>
+        <div class="campaign-view-content">
+          {% if campaigns|length %}
+          <div class="content-body">
+            <section class="dash-slider">
+              <div id="sliderDash4" class="splide">
+                <div class="splide__track">
+                  <ul class="splide__list">
+                    {% for campaign in campaigns %}
+                    <li class="splide__slide">
+                      <div class="splide__slide__container">
+                        <a href="{% url 'dashboard:cf_public' campaign.id %}">
+                          <img src="{{ campaign.large_media_cover_small }}" alt="">
+                        </a>
+                        <a class="dash-main-slider__cat" href="#">CrowdFunding</a>
+                      </div>
+                      <div class="dash-main-slider__content">
+                        <div class="dash-main-slider__header">
+                          <h3><a class="dash-main-slider__title" href="#">{{ campaign.title }}</a>
+                          </h3>
+                        </div>
+                        <a class="dash-main-slider__credentials" href="#">
+                          <div class="dash-main-slider__thumb">
+                            <img src="https://picsum.photos/id/30/20/20" alt="">
+                          </div>
+                          <div class="dash-main-slider__auth">
+                            {{ campaign.organization_name }}
+                          </div>
+                        </a>
+                        <div class="dash-main-slider__excerpt">
+                          <div class="only-two-lines">
+                            {{ campaign.description|safe }}
+                          </div>
+                        </div>
+                        <div class="dash-main-slider__details">
+                          <div class="collect-block">
+                            <p>
+                              <strong>${{ campaign.raised_fund|intcomma }}</strong> of
+                              ${{ campaign.goal_amount|add:"0"|intcomma }} raised
+                            </p>
+                          </div>
+                          <div class="remains-block">
+                            {% if campaign.days == 0 %}
+                              <div class="remains-block__label">Campaign Concluded</div>
+                              <div class="remains-block__val"></div>
+                            {% else %}
+                              <div class="remains-block__label">Ends in</div>
+                              <div class="remains-block__val">{{campaign.days}} days</div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="progress-block">
+                          <div class="progress-block__val" style="width: {{ campaign.raised_fund|calculate_percentage:campaign.goal_amount }}%"></div>
+                        </div>
+                      </div>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <form class="sendemailinvite">
+              {% csrf_token %}
+              <div class="form-group">
+                <div id="output" class="off" >
+                </div>
+                <div class="invite">
+                  <h1>invite member</h1>
+                  <p>Your are inviting new member to campaign</p>
+                  <span>COVID-19 aftermath new york city fund</span>
+                </div>
+                <label for="name">Name</label>
+                <input type="name" class="form-control" id="name" aria-describedby="name" name="name"placeholder="Enter Name">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="sendemail"placeholder="Enter email">
+                <input type="text" name="url" id="current_url" hidden>
+                <input type="text" name="orgnamee" id="orgnamee" hidden>
+                <a href="{% url 'sendInvite' %}" id="link" hidden></a>
+              </div>
+              
+              <button type="button" class="new-campaign new-campaign-pc btn-cus btn-cus-secondary" id="sendbuttoninvvite">Send Invitataion</button>
+              <button id="loading-image" class="new-campaign new-campaign-pc btn-cus btn-cus-secondary" hidden
+              ><img src="{% static 'accounts/assets/img/loading-buffering.gif' %}" style="width:25px;">
+              </button>
+            </div>
+              <!-- <input type="submit" value="Send Inviataion"> -->
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></div>

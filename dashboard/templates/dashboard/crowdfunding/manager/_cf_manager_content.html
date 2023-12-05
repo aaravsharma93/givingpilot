@@ -1,0 +1,664 @@
+{% load utils %}
+{% load static %}
+{% load url_thumbnail %}
+{% load humanize %}
+{% block extra_style %}
+<script src="{% static 'accounts/assets/js/vendor/Chart.bundle.min.js' %}"></script>
+{% endblock %}
+<div id="cf-manager" class="crowdfunding-page center-page">
+  <section class="preview-slider">
+    <div class="container">
+      <header class="preview-slider__header">
+        <h2 class="preview-slider__title">{{ campaign.title }}</h2>
+      </header>
+
+      <nav class="preview-nav">
+        <h3 class="preview-nav__title">Share</h3>
+        <ul class="preview-nav__list">
+          <li class="preview-nav__item">
+            <a href="https://web.whatsapp.com/send?text={% abs_url 'dashboard:cf_manager' campaign.id %}" data-action="share/whatsapp/share" class="preview-nav__link">
+                <img src="{% static 'dashboard/assets/img/icon-share-1.svg' %}" alt=""></a>
+          </li>
+          <li class="preview-nav__item">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={% abs_url 'dashboard:cf_manager' campaign.id %}" target="_blank"
+               class="preview-nav__link"><img src="{% static 'dashboard/assets/img/icon-share-2.svg' %}" alt=""></a>
+          </li>
+          <li class="preview-nav__item">
+            <a href = "https://telegram.me/share/url?url={% abs_url 'dashboard:cf_manager' campaign.id %}&text=Join%20My%20Campaign" class="preview-nav__link">
+                <img src="{% static 'dashboard/assets/img/icon-share-3.svg' %}" alt=""></a>
+          </li>
+          <li class="preview-nav__item">
+            <a href="mailto: insertemailhere@xyz.com?subject=Crowdfunding Email {% abs_url 'dashboard:cf_manager' campaign.id %}" class="preview-nav__link"><img src="{% static 'dashboard/assets/img/icon-share-4.svg' %}"
+                alt=""></a>
+          </li>
+          <li class="preview-nav__item">
+            <a href="#" class="preview-nav__link" role="button" id="extra_options" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown"><img src="{% static 'dashboard/assets/img/icon-share-5.svg' %}"
+                alt=""></a>
+            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="extra_options" style="z-index: 15500;margin-right: 100px">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit-campaign-modal">Delete Campaign</a>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-manager-campaign-modal">Add Manager</a>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-member-campaign-modal">Add Member</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="preview-slider__primary">
+        <div id="sliderPreviewPrimary" class="splide">
+          <div class="splide__track">
+            <ul class="splide__list">
+                <li class="splide__slide">
+                    <img src="{{ campaign.small_medias.0.url }}" data-splide-lazy="{{ campaign.small_medias.0.url }}"
+{#                  alt="Sample Image 00">
+{#              {% if campaign.large_media %}#}
+{#              <li class="splide__slide" data-splide-html-video="{{ campaign.large_media.url }}">#}
+{#                {% elif campaign.large_image %}#}
+{#              <li class="splide__slide">#}
+{#                {% else %}#}
+{#              <li class="splide__slide" data-splide-{{ campaign.large_media_url|check_url}}="{{ campaign.large_media_url }}">#}
+{#                {% endif %}#}
+{#                <img src="{{ campaign.large_image|add_host }}" data-splide-lazy="{{ campaign.large_media_thumbnail }}"#}
+{#                  alt="Sample Image 00">#}
+              </li>
+
+              {% for small_media in small_medias %}
+              {% if small_media.file %}
+              <li class="splide__slide" data-splide-html-video="{{ small_media.file.url }}">
+                <img src="https://picsum.photos/id/10/1024/768" data-splide-lazy="https://picsum.photos/id/10/260/275"
+                  alt="Sample Image 00">
+              </li>
+              {% elif small_media.image %}
+              <li class="splide__slide">
+                <img src="{{ small_media.image|add_host }}" data-splide-lazy="https://picsum.photos/id/10/260/275"
+                  alt="Sample Image 04">
+              </li>
+              {% else %}
+              <li class="splide__slide" data-splide-{{ small_media.media_url|check_url }}="{{ small_media.media_url }}">
+                <img src="https://picsum.photos/id/10/1024/768" data-splide-lazy="https://picsum.photos/id/10/260/275"
+                  alt="Sample Image 01">
+              </li>
+              {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-slider__secondary">
+        <div id="sliderPreviewSecondary" class="splide">
+          <div class="splide__track">
+            <ul class="splide__list">
+              <li class="splide__slide">
+                <div
+                  class="preview-slider__card {% if campaign.large_is_video %}preview-slider__card--video{% endif %}">
+                  <img class=".preview-slider__thumb" src="{{ campaign.large_media_thumbnail }}" alt="">
+                </div>
+              </li>
+              {% for small_media in small_medias %}
+              <li class="splide__slide">
+                <div class="preview-slider__card {% if small_media.is_video %}preview-slider__card--video{% endif %}">
+                  <img class=".preview-slider__thumb" src="{{ small_media.thumbnail }}" alt="">
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="pb-5 border-bottom mt-5 p-10">
+
+    <div class="text-cus-secondary text-uppercase small"
+      style="width: 650px; margin: auto; letter-spacing: 1.5px; font-size: 16px; font-weight: 700; color: #8A94A6 !important;">
+      <b>Fund use</b>
+      {% if not is_public %}
+      <span class="edit-item ml-2 text-cus-primary" data-nav-link="?tab=tab-about-campaign&tag=nc-camp-cause"><i
+          class="fas fa-pen"></i></span>
+      {% endif %}
+    </div>
+
+    <div class="content-title public-content-title">
+      {{ campaign.title }}
+    </div>
+
+  </div>
+  <div class="mt-5 pb-5 border-bottom about-content">
+    <div class="text-cus-secondary text-uppercase mt-5 ls-2"
+      style="font-size: 16px; font-weight: 700; color: #8A94A6 !important;"><b>About the campaign</b>
+      {% if not is_public %}
+      <span class="edit-item ml-2 text-cus-primary" data-nav-link="?tab=tab-about-campaign&tag=nc-camp-description"><i
+          class="fas fa-pen"></i></span>
+      {% endif %}
+    </div>
+    <p>{{ campaign.description|safe }}</p>
+  </div>
+
+  {% include 'dashboard/crowdfunding/public/_right_bar_on_mobile.html' %}
+
+  <div class="updates pt-5 pb-5 p-10" style="background-color: #f2f3f5; border-top: 1px solid #dee2e6 !important;">
+
+    <div class="text-uppercase ls-2  text-center text-md-left post-update-content">
+      <b>Post updates</b>
+      <div class="post-container">
+        <textarea id="org-description" class="post-update-textarea"></textarea>
+        <div class="btn-cus btn-cus-secondary post-btn post-update-button" id="post-update">Post</div>
+
+      </div>
+    </div>
+
+    <div class="updates-content mt-4 post-commit" id="update-sec">
+        {% for comment in comments %}
+          <div class="update mt-3" style="padding-left: 2rem;">
+            <div class="photo" style="min-width: 40px; width: 40px;">
+              <img src="{{ comment.user.profile.profile_pic|get_image_url }}" class="photo-img" alt="photo"
+                style="width: 40px">
+            </div>
+                  <div class="info-group">
+                      <div class="info-and-detail">
+                        <div class="info">
+                          <div class="name">{{ comment.user.profile.full_name }}</div>
+                          <div class="date">{{ comment.created_at }}</div>
+                        </div>
+                        <div class="detail">
+{#                          <img src="{{ comment.user.profile.profile_pic|get_image_url }}">#}
+                        </div>
+                      </div>
+                      <div class="update-text">
+                        {{ comment.message }}
+                      </div>
+                  </div>
+    {#        <div class="info-group">#}
+    {#          <div class="info-and-detail">#}
+    {#            <div class="info">#}
+    {#              <div class="name">Jeffrey Washington</div>#}
+    {#              <div class="date">12:24AM, 12-May 2020</div>#}
+    {#            </div>#}
+    {#            <div class="detail">#}
+    {#              <img src="{% static 'dashboard/assets/img/detail.png' %}">#}
+    {#            </div>#}
+    {#          </div>#}
+    {#          <div class="update-text">#}
+    {#            At vero eos censes tantas res gessisse sine causa? quae fuerit causa, nollem. Omne#}
+    {#            animal, simul atque natum sit, amet, consectetur, adipisci velit, sed quia voluptas. Sed#}
+    {#            ut dolore suo sanciret militaris imperii disciplinam exercitumque in gravissimo bello#}
+    {#            animadversionis. Laudem et via procedat oratio quaerimus igitur, quid iudicat, quo enim#}
+    {#            maxime consuevit.#}
+    {#          </div>#}
+    {#        </div>#}
+          </div>
+        {% endfor %}
+    </div>
+
+    <div class="btn-cus btn-cus-secondary post-btn"
+      style="color: #00aeef; background: #ffffff; border-width: 1px; border: 1px solid #00aeef !important; width: 307.73px; margin: auto;">
+      Load more posts..
+    </div>
+
+  </div>
+
+  <div class="pb-5 border-bottom" style="border-top: 1px solid #dee2e6 !important; padding-left: 10%">
+    <div class="text-cus-secondary text-uppercase mt-5"
+      style="font-size: 16px; font-weight: 700; color: #8A94A6 !important;">
+
+      <div class="fund-raising-summary-title">
+        <b>Fund raising summary</b>
+        <div style="margin-left: auto;"><img src="{% static 'dashboard/assets/img/detail.png' %}"></div>
+      </div>
+
+      <div style="display: flex; width: 820px; ">
+        <div style="margin-top: 17px; display: flex">
+          <div style="display: flex; width: 186px">
+            <img src="{% static 'dashboard/assets/img/pointer-png.png' %}" alt="photo"
+              style="width:25px; height: 25px; margin-right:11px">
+            <div>
+              <div class="fund-rasing-summary">Goal</div>
+              <div style="font-weight: 700; font-size: 32px; line-height: 0.75; color: #00AEEF">${{ campaign.goal_amount|intcomma }}
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; width: 186px">
+            <img src="{% static 'dashboard/assets/img/chart-line-png.png' %}" alt="photo"
+              style="width:25px; height: 25px; margin-right:11px">
+            <div>
+              <div class="fund-rasing-summary">Raised</div>
+              <div style="font-weight: 700; font-size: 32px; line-height: 0.75; color: #7BC581">${{ campaign.raised_fund|intcomma }}
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; width: 186px">
+            <img src="{% static 'dashboard/assets/img/hands-helping-png.png' %}" alt="photo"
+              style="width:25px; height: 25px; margin-right:11px">
+            <div>
+              <div class="fund-rasing-summary">Total Contributors</div>
+              <div style="font-weight: 700; font-size: 32px; line-height: 0.75; color: #223B60">{{ contributors|length }}</div>
+            </div>
+          </div>
+        </div>
+        <div style="border-left: 1px solid #dee2e6 !important; padding-left: 33px; margin: auto auto 0;">
+          <div class="btn-cus btn-cus-secondary post-btn">Export As...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pb-5 border-bottom" style="border-top: 1px solid #dee2e6 !important; padding-left: 10%">
+    <div class="text-cus-secondary text-uppercase mt-5"
+      style="font-size: 16px; font-weight: 700; color: #8A94A6 !important;">
+      <div style="display: flex; width: 95%; ">
+        <div class="goal-amount">
+          <div class="d-flex justify-content-between" style="padding-bottom: 11px">
+            <div class="text-cus-secondary text-uppercase ls-2">
+              <b style="font-size: 16px">Fund Raising progress</b>
+            </div>
+          </div>
+          <div class="amount-charged mt-1">
+            <div style="text-transform: none;">
+              <span class="raised text-cus-dark">
+                <b style="font-size:16px; font-weight: 900; line-height: 1.5">${{ campaign.raised_fund|intcomma }}</b>
+              </span> of ${{ campaign.goal_amount|intcomma }} raised
+            </div>
+            <div class="progress-bar mt-1 rasing-progress-bar" style="width: 820px; height: 120px;">
+              <div class="full-bar"
+                style="height: 120px; border-right: 1px solid #dee2e6 !important; border-radius: 0px; background-color: #E5F6FD!important;">
+              </div>
+              <div class="filled-bar" style="width: {{ campaign.raised_percentage }}% !important; height: 120px;">
+                <div class="position-relative">
+                  <div class="vertical-bar" style="height: 137px; top:-8px"></div>
+                  <div class="circle" style="top: 128px;"></div>
+                  {% comment %} <div class="raised">${{ campaign.raised_fund|intcomma }}</div>
+                  {% endcomment %}
+                  <div class="raised" style="top: 139px;">${{ campaign.raised_fund|intcomma }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="w-100 d-flex justify-content-between mt-1 mb-2" style="z-index: 100">
+              <div class="text-cus-dark"><b>$0.00</b></div>
+              <div class="text-cus-dark"><b>${{ campaign.goal_amount|intcomma }}</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="width: 100%; border-bottom: 1px solid #dee2e6 !important;">
+    <div class="manage-info" style="padding-left: 10%; width: 95%;">
+      <div class="pt-5 border-bottom pb-5 progress-breakdown-chart">
+        <div class="chart">
+          <div class="progress-breakdown-chart-title">
+            <div class="text-cus-secondary text-uppercase ls-2 chart-title-name">Progress breakdown</div>
+            <div class="d-flex justify-content-end">
+              <div class="form-group with-icon p-0 m-0" style="width: 200px">
+                <select id="kpi_dropdown" name="" class="form-control">
+                  <option value="7">Last 7 Days</option>
+                  <option value="1">Last 1 Day</option>
+                  <option value="3">Last 3 Days</option>
+                </select>
+                <div class="icon"><i class="fas fa-chevron-down text-cus-primary"></i></div>
+              </div>
+              <div class="detail ml-3 d-flex align-items-center">
+                <img src="{% static 'dashboard/assets/img/detail.png' %}">
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 progress-chart">
+            <canvas id="myChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="manage-info mt-5" style="width: 650px; margin: auto;">
+    <div class="members-and-contributors pb-md-5 row">
+      <div class="contributors row-item">
+        <div class="text-uppercase text-cus-secondary ls-2"><b>Contributors</b></div>
+        <div class="search-bar-group mt-2" style="width: 650px; height: 55px">
+          <input type="text" id="search-contributor" class="search-bar" placeholder="Search Contributors"
+            onkeyup="onSearchContributors()" style="font-size: 18px; padding-bottom: 4px;">
+          <div class="search-icon" style="top: 11px; left: 17px;"><i class="fas fa-search"></i></div>
+        </div>
+        <div class="table-wrapper">
+          <table id="contributor-group" class="contributor-group mt-3">
+              {% for contr in contributors %}
+                <tr>
+                  <td class="contributor w-100">
+                    <div class="photo" style="min-width: 45px; width: 45px; height: 45px;">
+                      <img src="{{ contr.user.profile.profile_pic|get_image_url }}" class="photo-img" alt="photo"
+                        style="width: 45px">
+                    </div>
+                    <div class="info" style="margin-left: 12px;">
+                      <div class="name" style="line-height: 22px;">{{ contr.user.profile.full_name }}</div>
+                      <div class="amount">${{ contr.amount }}</div>
+                    </div>
+                  </td>
+                </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="hidden-field">
+    <input type="text" class="go-to-update-campaign-url" value="{% url 'dashboard:new_campaign' campaign.id 'update' %}"
+      hidden>
+    <input type="text" class="go-to-publish-url" value="{% url 'dashboard:publish_new_campaign' campaign.id %}" hidden>
+    <input type="text" class="large-media-src"
+      value="{% if campaign.large_media %}{{ campaign.large_media.url }}{% endif %}" hidden>
+    <input type="text" class="large-media-url" value="{{ campaign.large_media_url }}" hidden>
+    <input type="text" class="large-image-src" value="{{ campaign.large_image }}" hidden>
+    <input type="text" class="large-media-type" value="" hidden>
+    <input type="text" class="small-medias-number" value="{{ small_medias|length }}" hidden>
+    {% for small_media in small_medias %}
+    <input type="text" class="small-media-src" value="{% if small_media.file %}{{ small_media.file.url }}{% endif %}"
+      hidden>
+    <input type="text" class="small-image-src" value="{% if small_media.image %}{{ small_media.image }}{% endif %}"
+      hidden>
+    <input type="text" class="small-media-url" value="{{ small_media.media_url }}" hidden>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal fade" id="edit-campaign-modal" tabindex="-1" role="dialog" aria-labelledby="EditCampaignModal"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="width: 460px;">
+      <div class="modal-header border-0" style="padding: 20px 30px 0px 30px">
+        <h5 class="modal-title" id="EditCampaignModal"
+          style="font-size: 16px; font-weight: 400; line-height: 1.5; color: #022047;">
+          Why do you want to delete your campaign <br /> “{{ campaign.title }}” ?
+        </h5>
+      </div>
+      <div class="modal-body"
+        style="padding: 20px 30px 30px 30px; display: inline-grid; border-bottom: 1px solid #E6EEFA !important">
+
+        <label style="font-size: 16px; color: #8A94A6; margin-bottom: 15px;">
+          <input type="radio" name="paymentType" value="numberOne" checked="checked"
+            style="margin-right: 6px; transform: scale(1.3);">
+          This is the reason number one
+        </label>
+
+        <label style="font-size: 16px; color: #8A94A6;  margin-bottom: 15px;">
+          <input type="radio" name="paymentType" value="numberTwo" style="margin-right: 6px; transform: scale(1.3);">
+          Reason number two is also good
+        </label>
+
+        <label style="font-size: 16px; color: #8A94A6;  margin-bottom: 15px;">
+          <input type="radio" name="paymentType" value="numberTwo" style="margin-right: 6px; transform: scale(1.3);">
+          Reason number two is also good
+        </label>
+
+        <label style="font-size: 16px; color: #8A94A6;  margin-bottom: 15px;">
+          <input type="radio" name="paymentType" value="numberTwo" style="margin-right: 6px; transform: scale(1.3);">
+          Other
+        </label>
+
+        <textarea id="org-description" class="post-update-textarea" placeholder="Type other reason here..."
+          style="width: 400px; height: 88px; padding: 13px 16px; font-size: 14px; color: #A4AEBD; line-height: 1.429;"></textarea>
+      </div>
+
+      <div class="modal-body" style="padding: 26px 30px 2px 30px;">
+
+        <div class="d-flex align-items-center" style="margin-bottom: 13px;">
+          <div class="toggle-keep-private-phone custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input checked" id="toggle-keep-private-phone" checked>
+            <label class="custom-control-label text-cus-dark" for="toggle-keep-private-phone">
+              Inform Members
+            </label>
+          </div>
+        </div>
+
+        <textarea id="org-description" class="post-update-textarea" placeholder="Type other reason here..."
+          style="width: 400px; height: 88px; padding: 13px 16px; font-size: 14px; color: #A4AEBD; line-height: 1.429;">
+        </textarea>
+
+        <div style="margin-top: 21px; display: inline-grid;">
+          <label style="font-size: 16px; color: #8A94A6; margin-bottom: 15px;">
+            <input type="radio" name="paymentType" value="numberOne" checked="checked"
+              style="margin-right: 6px; transform: scale(1.3);">
+            Inform all Members
+          </label>
+
+          <label style="font-size: 16px; color: #8A94A6;  margin-bottom: 15px;">
+            <input type="radio" name="paymentType" value="numberTwo" style="margin-right: 6px; transform: scale(1.3);">
+            Custom Members
+          </label>
+        </div>
+
+        <div class="crowdfunding-page">
+          <div class="manage-info" style="width: 400px; margin-top: 12px;">
+            <div class="members-and-contributors">
+              <div class="contributors row-item">
+                <div class="search-bar-group mt-2" style="width: 400px;">
+                  <input type="text" id="search-contributor" class="search-bar" placeholder="Search Contributors"
+                    onkeyup="onSearchContributors()" style="font-size: 14px; height: 40px;">
+                  <div class="search-icon" style="top: 8px; left: 17px; font-size: 16px;"><i class="fas fa-search"></i>
+                  </div>
+                </div>
+                <div class="table-wrapper" style="padding: 16px 15px;">
+                  <table id="contributor-group" class="contributor-group mt-3">
+                      {% for contr in contributors %}
+                        <tr>
+                          <td class="contributor w-100">
+                            <div class="photo" style="min-width: 45px; width: 45px; height: 45px;">
+                              <img src="{{ contr.user.profile.profile_pic|get_image_url }}" class="photo-img" alt="photo"
+                                style="width: 45px">
+                            </div>
+                            <div class="info" style="margin: auto 12px;">
+                              <div class="name" style="line-height: 22px;">{{ contr.user.profile.full_name }}</div>
+                            </div>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <div style="padding-top: 21px; display: flex; justify-content: space-between;">
+            <button class="btn-cus btn-cus-secondary"
+              style="width: 140px; border: 1px solid #00aeef !important; background-color: #ffffff; color: #00aeef">Delete</button>
+            <button class="btn-cus btn-cus-secondary" data-dismiss="modal" aria-label="Close"
+              style="width: 140px; border-width: 1px; border-color: #00aeef;">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Become Manager Invite --->
+<div class="modal fade" id="add-manager-campaign-modal" tabindex="-1" role="dialog" aria-labelledby="AddManagerCampaignModal"
+  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="width: 460px;">
+          <div class="modal-header border-0" style="padding: 20px 30px 0px 30px">
+            <h5 class="modal-title" id="EditCampaignModal"
+              style="font-size: 16px; font-weight: 400; line-height: 1.5; color: #022047;">
+              Become Manager Invite
+            </h5>
+          </div>
+          <div class="modal-body"
+            style="padding: 20px 30px 30px 30px; display: inline-grid; border-bottom: 1px solid #E6EEFA !important">
+              <label style="font-size: 16px; color: #8A94A6;  margin-bottom: 15px;">
+                  <input id="manager-invite-email" style="font-size: 16px; color: #8A94A6; margin-bottom: 15px;" placeholder="test@email.com"/>
+              </label>
+              <label style="font-size: 16px; color: #8A94A6; margin-bottom: 15px;">
+            Message
+              </label>
+              <textarea id="org-description" class="post-update-textarea"
+          style="width: 400px; height: 88px; padding: 13px 16px; font-size: 14px; color: #A4AEBD; line-height: 1.429;"></textarea>
+          </div>
+            <div style="margin-bottom: 20px;">
+              <div style="padding-top: 21px; display: flex; justify-content: space-around;">
+                <button class="btn-cus btn-cus-secondary"
+                  style="width: 140px; border: 1px solid #00aeef !important; background-color: #ffffff; color: #00aeef">Delete</button>
+                <button class="btn-cus btn-cus-secondary" data-dismiss="modal" aria-label="Close"
+                  style="width: 140px; border-width: 1px; border-color: #00aeef;">Cancel</button>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Become Member Invite --->
+<div class="modal fade" id="add-member-campaign-modal" tabindex="-1" role="dialog" aria-labelledby="AddMemberCampaignModal"
+  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="width: 460px;">
+          <div class="modal-header border-0" style="padding: 20px 30px 0px 30px">
+            <h5 class="modal-title" id="EditCampaignModal"
+              style="font-size: 16px; font-weight: 400; line-height: 1.5; color: #022047;">
+              Send Invitation
+            </h5>
+          </div>
+          <div class="modal-body"
+            style="padding: 20px 30px 30px 30px; display: inline-grid; border-bottom: 1px solid #E6EEFA !important">
+              <label style="font-size: 16px; color: #8A94A6;  margin-bottom: 15px;">
+                  <input id="member-invite-email" style="font-size: 16px; color: #8A94A6; margin-bottom: 15px;" placeholder="test@email.com"/>
+              </label>
+              <label style="font-size: 16px; color: #8A94A6; margin-bottom: 15px;">
+            Message
+              </label>
+              <textarea id="member-message" class="post-update-textarea"
+          style="width: 400px; height: 88px; padding: 13px 16px; font-size: 14px; color: #A4AEBD; line-height: 1.429;"></textarea>
+          </div>
+             <div style="margin-bottom: 20px;">
+              <div style="padding-top: 21px; display: flex; justify-content: space-around;">
+                <button class="btn-cus btn-cus-secondary"
+                  style="width: 140px; border: 1px solid #00aeef !important; background-color: #ffffff; color: #00aeef">Delete</button>
+                <button class="btn-cus btn-cus-secondary" data-dismiss="modal" aria-label="Close"
+                  style="width: 140px; border-width: 1px; border-color: #00aeef;">Cancel</button>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% block extra_script %}
+<script>
+    window.CSRF_TOKEN = "{{ csrf_token }}";
+  async function render_chart(days){
+      let analyze_url = "/dashboard/get-kpi";
+      let response = await $.ajax({
+          type:"get",
+          url: analyze_url,
+          data:{
+              delta:days,
+              campaign_id: '{{ campaign.id }}'
+          }
+      });
+      let options = {
+        type: 'line',
+        data: {
+          labels: response.days,
+          datasets: [
+            {
+              label: '# of Votes',
+              backgroundColor: '#8cdaf8',
+              borderColor: 'none',
+              data: response.data,
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                reverse: false,
+                callback: function (value, index, values) {
+                  return value
+                }
+              },
+              position: 'right',
+              gridLines: {
+                color: '#e5f6fd',
+              },
+              layout: {
+                padding: {
+                  right: 50
+                }
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                reverse: true,
+                beginAtZero: true,
+              },
+              gridLines: {
+                color: '#e5f6fd',
+              }
+            }]
+          },
+          elements: {
+            line: {
+              tension: 0.0001
+            }
+          }
+        }
+      }
+      let ctx = document.getElementById('myChart').getContext('2d');
+      new Chart(ctx, options);
+  }
+
+  let postComment = async (event) => {
+      let comment = $("#org-description").val();
+      let url = "post-update/{{ campaign.id }}"
+      let data = {
+          "comment":comment,
+          csrfmiddlewaretoken : '{{ csrf_token }}'
+      }
+      let response = await $.ajax({
+          url: url,
+          {#csrfmiddlewaretoken: window.CSRF_TOKEN,#}
+          data: data,
+          dataType: "json",
+          method: "POST",
+          {#data: JSON.stringify({"comment":comment})#}
+      });
+      let comment_ele = $(`<div class="update mt-3" style="padding-left: 2rem;">
+        <div class="photo" style="min-width: 40px; width: 40px;">
+          <img src="${response.pic}" class="photo-img" alt="photo" style="width: 40px">
+        </div>
+        <div class="info-group">
+          <div class="info-and-detail">
+            <div class="info">
+              <div class="name">${response.name}</div>
+              <div class="date">${response.date}</div>
+            </div>
+            <div class="detail">
+              <img src="/static/dashboard/assets/img/detail.png">
+            </div>
+          </div>
+          <div class="update-text">
+           ${response.message}
+          </div>
+        </div>
+      </div>`);
+      $("#update-sec").append(comment_ele);
+      comment.val('').change();
+      {#location.reload();#}
+  }
+  $("#post-update").on("click", postComment);
+
+  $(document).ready(function () {
+      render_chart(7)
+
+      $("#kpi_dropdown").on("click", () => {
+          let days = $("#kpi_dropdown option:selected").val();
+          render_chart(parseInt(days))
+      })
+  })
+</script>
+{% endblock %}

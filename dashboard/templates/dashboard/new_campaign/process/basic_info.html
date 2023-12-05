@@ -1,0 +1,47 @@
+{% load static %}
+<div id="nc-basic-info" class="basic-info d-none campaign-content tab-body" data-navlink="item-basic">
+  <div class="sub-title mt-4">
+    Basic Information
+  </div>
+  <div class="text-cus-secondary" style="font-size: 18px;">
+    Tell us about your campaign organization
+  </div>
+  <div class="info">
+    <div class="form-group">
+      <div class="mt-5">
+        <div class="alert alert-danger org-name-required d-none">
+          Organization name is required.
+        </div>
+        <input type="text" id="org-name" class="form-control" name="organization"
+          value="{{ campaign.organization_name }}" placeholder="Name of Organization" style="letter-spacing: 0.7px;">
+      </div>
+      <div class="mt-4">
+        <div class="alert alert-danger org-description-required d-none">
+          Organization description is required.
+        </div>
+        <textarea id="org-description" class="" style="font-style: italic; letter-spacing: 0.7px;"
+          placeholder="Description of your organization ...">{{ campaign.organization_description }}</textarea>
+      </div>
+    </div>
+    <div class="upload-logo mt-4">
+      <input type="file" hidden>
+      <div class="logo-img">
+        <img id="logo-img-src" class="img" src="{{ campaign.organization_logo.url }}" alt="company-logo">
+      </div>
+      <div class="logo-action">
+        <div class="sub-title">
+          Add your organization's logo
+        </div>
+        <input type="file" id="input-logo" hidden>
+        <div class="btn-cus btn-cus-primary mt-auto" onclick="onClickUploadLogo()">Upload</div>
+      </div>
+    </div>
+    <div class="bottom pt-5">
+      <div class="back btn-cus btn-cus-primary mr-3" onclick="onBasicInfoBack()">Back</div>
+      <div class="next btn-cus btn-cus-secondary" onclick="onBasicInfoNext()">Next</div>
+    </div>
+  </div>
+  <div class="hidden-field">
+    <input type="text" class="save-url" value="{% url 'dashboard:new_campaign_process' 'basic_info' %}" hidden>
+  </div>
+</div>

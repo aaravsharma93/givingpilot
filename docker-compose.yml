@@ -1,0 +1,106 @@
+version: '3'
+services:
+    web:
+        build: .
+#        image: sail-8.0/app
+        restart: always
+        ports:
+            - 8000:8000
+#            - 5432:5432
+#        volumes:
+#            - '.:/var/www/html'
+        networks:
+            - sail
+        volumes:
+            -   'saildjango:/code/media'
+        depends_on:
+            - postgres
+#            - redis
+    nginx:
+        image: nginx:1.15-alpine
+        restart: always
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - ./data/nginx:/etc/nginx/conf.d
+            - ./data/certbot/conf:/etc/letsencrypt
+            - ./data/certbot/www:/var/www/certbot
+#        depends_on:
+#            - web
+        networks:
+            - sail
+        command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+    certbot:
+        image: certbot/certbot
+        networks:
+            - sail
+        volumes:
+            - ./data/certbot/conf:/etc/letsencrypt
+            - ./data/certbot/www:/var/www/certbot
+        entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+    postgres:
+        image: 'postgres:12'
+        restart: always
+        ports:
+            - 5432:5432
+        environment:
+            - POSTGRES_DB=fundraiser_db
+            - POSTGRES_USER=fundraiser_admin
+            - POSTGRES_PASSWORD=fundraiser_pass728
+        volumes:
+            - 'sailpostgres:/var/lib/postgresql/data'
+        networks:
+            - sail
+#    redis:
+#        image: 'redis:alpine'
+#        ports:
+#            - '${FORWARD_REDIS_PORT:-6379}:6379'
+#        volumes:
+#            - 'sailredis:/data'
+#        networks:
+#            - sail
+    # memcached:
+    #     image: 'memcached:alpine'
+    #     ports:
+    #         - '11211:11211'
+    #     networks:
+    #         - sail
+    mailhog:
+        image: 'mailhog/mailhog:latest'
+        restart: always
+        ports:
+            - 1025:1025
+            - 8025:8025
+        networks:
+            - sail
+    pgadmin:
+        image: 'dpage/pgadmin4'
+        ports:
+            - 5050:80
+        networks:
+            - sail
+        volumes:
+            - 'sailpgadmin:/var/lib/pgadmin'
+        environment:
+            - DEBUG=1
+            - PGADMIN_DEFAULT_EMAIL=user@domain.com
+            - PGADMIN_DEFAULT_PASSWORD=SuperSecret
+
+networks:
+    sail:
+        driver: bridge
+volumes:
+    saildjango:
+        driver: local
+
+    sailpostgres:
+        driver: local
+
+    sailpgadmin:
+        driver: local
+
+#    sailredis:
+#        driver: local

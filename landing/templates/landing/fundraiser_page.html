@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'landing/assets/css/landing.css' %}" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;1,400;1,900&display=swap" rel="stylesheet">
+{% endblock %}
+{% block content %}
+
+<div class="why-us-head">
+    <h5>Fundraiser Navigator</h5>
+    <h1>A User-Friendly Dashboard</h1>
+    <p>Our Fundraising Navigator provides advanced analytics and a user-friendly dashboard so you can avoid delays and keep on track and on time with your campaign. </p>
+    <p>Fundraising has never been easier.</p>
+</div>
+<div class="detmin-imag text-center">
+    <img src="..\static\landing\assets\img\testimonial-bg.png">
+</div>
+
+<div class="button-cutom text-center">
+    <a href="{% url 'sign_up' %}" class="cutom">Get started</a>
+</div>
+
+{% endblock %}
+{% block extra_script %}
+<script src="{% static 'landing/assets/js/index.js' %}"></script>
+{% endblock %}
